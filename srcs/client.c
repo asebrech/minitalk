@@ -6,7 +6,7 @@
 /*   By: asebrech <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 10:51:36 by asebrech          #+#    #+#             */
-/*   Updated: 2021/06/28 16:36:24 by asebrech         ###   ########.fr       */
+/*   Updated: 2021/06/28 17:56:02 by asebrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ static void	ft_convert(char **av, pid_t pid)
 	i = 0;
 	while (av[2][i])
 	{
-		str = ft_itoa_base((long  int)av[2][i], "01");
-		if (ft_strlen(str) == 6)
-			kill(pid, SIGUSR1);
+		str = ft_decimal(av[2][i]);
 		j = 0;
 		while (str[j])
 		{
@@ -34,11 +32,27 @@ static void	ft_convert(char **av, pid_t pid)
 			usleep(150);
 			j++;
 		}
-		ft_putstr_fd(str, 1);
 		free(str);
 		i++;
 	}
 }
+
+static void	ft_alldigit(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+		{
+			ft_putstr_fd("Second argument is not a PID\n", 2);
+			exit(1);
+		}
+		i++;
+	}
+}
+
 int	main (int ac, char **av)
 {
 	pid_t	pid;
@@ -46,7 +60,13 @@ int	main (int ac, char **av)
 	pid = 0;
 	if (ac == 3)
 	{
+		ft_alldigit(av[1]);
 		pid = ft_atoi(av[1]);
 		ft_convert(av, pid);
 	}
+	else if (ac > 3)
+		ft_putstr_fd("Too many arguments\n", 2);
+	else if (ac < 3 && ac != 1)
+		ft_putstr_fd("Too few arguments\n", 2);
+	return (0);
 }
