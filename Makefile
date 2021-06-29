@@ -6,7 +6,7 @@
 #    By: asebrech <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/23 16:13:10 by asebrech          #+#    #+#              #
-#    Updated: 2021/06/28 18:08:01 by asebrech         ###   ########.fr        #
+#    Updated: 2021/06/29 16:26:29 by asebrech         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,10 +19,8 @@ NAME1 = libserver.a
 NAME2 = libclient.a
 EXEC1 = server
 EXEC2 = client
-SRC1 = srcs/server.c\
-	   srcs/utiles.c
-SRC2 = srcs/client.c\
-	   srcs/utiles.c
+SRC1 = srcs/server.c
+SRC2 = srcs/client.c
 OBJ1 = $(SRC1:.c=.o)
 OBJ2 = $(SRC2:.c=.o)
 RM = rm -rf

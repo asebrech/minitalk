@@ -6,7 +6,7 @@
 /*   By: asebrech <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 11:43:49 by asebrech          #+#    #+#             */
-/*   Updated: 2021/06/28 17:54:29 by asebrech         ###   ########.fr       */
+/*   Updated: 2021/06/29 16:25:04 by asebrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ int	ft_binary(int nbr)
 	return (deci_nbr);
 }
 
-char	*ft_decimal(char c)
+unsigned char	*ft_decimal(unsigned char c)
 {
 	int		i;
-	char	*octet;
+	unsigned char	*octet;
 	i = 0;
-	octet = malloc(sizeof(char) * 8);
+	octet = malloc(sizeof(unsigned char) * 8);
 	if (!octet)
 	{
 		ft_putstr_fd("Error\n", 2);
