@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asebrech <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/28 10:55:42 by asebrech          #+#    #+#             */
-/*   Updated: 2021/06/30 09:45:15 by asebrech         ###   ########.fr       */
+/*   Created: 2021/06/30 09:41:07 by asebrech          #+#    #+#             */
+/*   Updated: 2021/06/30 09:41:10 by asebrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 static int	ft_decimal(int nbr)
 {
@@ -36,7 +36,6 @@ static void	fill(int sig, siginfo_t *info, void *context)
 	static char	c[8];
 	int			nb;
 
-	info = NULL;
 	context = NULL;
 	nb = 0;
 	if (sig == SIGUSR1)
@@ -51,6 +50,8 @@ static void	fill(int sig, siginfo_t *info, void *context)
 		nb = ft_atoi(c);
 		nb = ft_decimal(nb);
 		ft_putchar_fd((unsigned char)nb, 1);
+		if ((unsigned char)nb == '\0')
+			kill(info->si_pid, SIGUSR1);
 	}
 }
 

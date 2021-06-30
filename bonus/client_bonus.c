@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asebrech <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/28 10:51:36 by asebrech          #+#    #+#             */
-/*   Updated: 2021/06/30 09:45:00 by asebrech         ###   ########.fr       */
+/*   Created: 2021/06/30 09:40:54 by asebrech          #+#    #+#             */
+/*   Updated: 2021/06/30 09:40:56 by asebrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 static char	*ft_binary(unsigned char c)
 {
@@ -36,6 +36,25 @@ static char	*ft_binary(unsigned char c)
 	return (octet);
 }
 
+static void	ft_end(pid_t pid)
+{
+	int		i;
+	char	*str;
+
+	i = 0;
+	str = ft_binary('\0');
+	while (str[i])
+	{
+		if (str[i] == '0')
+			kill(pid, SIGUSR1);
+		else if (str[i] == '1')
+			kill(pid, SIGUSR2);
+		usleep(150);
+		i++;
+	}
+	free(str);
+}
+
 static void	ft_convert(char **av, pid_t pid)
 {
 	int		i;
@@ -59,6 +78,13 @@ static void	ft_convert(char **av, pid_t pid)
 		free(str);
 		i++;
 	}
+	ft_end(pid);
+}
+
+static void	reception(int sign)
+{
+	if (sign == SIGUSR1)
+		ft_putstr_fd("MESSAGE RECEIVED\n", 1);
 }
 
 int	main (int ac, char **av)
@@ -68,6 +94,7 @@ int	main (int ac, char **av)
 
 	pid = 0;
 	i = 0;
+	signal(SIGUSR1, &reception);
 	if (ac == 3)
 	{
 		while (av[1][i])
